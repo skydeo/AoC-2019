@@ -9,12 +9,12 @@ test_input = [int(i) for i in "1,9,10,3,2,3,11,0,99,30,40,50".split(',')]
 
 
 # Part One
-def process_intcode(ins):
+def process_intcode(ins, noun, verb):
   pos = 0
 
   # Replace values
-  ins[1] = 12
-  ins[2] = 2
+  ins[1] = noun
+  ins[2] = verb
 
   code = ins[pos]
 
@@ -34,7 +34,19 @@ def process_intcode(ins):
 
   return ins[0]
 
-print(f"Program completed.\nValue at position 0: {process_intcode(puzzle_input)}")
+start_time = timeit.default_timer()
+print(f"Program completed.\nValue at position 0: {process_intcode(puzzle_input[:], 12, 2)}")
+print(f"Completed in {round(timeit.default_timer()-start_time, 4)} seconds.")
 
 # Part Two
+start_time = timeit.default_timer()
+
+output = 19690720
+
+for noun in range(0,100):
+  for verb in range(0,100):
+    if process_intcode(puzzle_input[:], noun, verb) == output:
+      print(f"Magic value found: {100*noun+verb}")
+      break
+print(f"Completed in {round(timeit.default_timer()-start_time, 4)} seconds.")
 
